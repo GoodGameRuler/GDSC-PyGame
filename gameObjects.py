@@ -1,6 +1,7 @@
 from random import randint
 from re import L
 import pygame
+import start
 from spritesheet import Spritesheet 
 
 class gameObject(pygame.sprite.Sprite):
@@ -26,7 +27,7 @@ class Player(gameObject):
         super().__init__(1, 2, "img/player/idle.png")
         
         self.alive = True
-        self.lives = 3
+        self.lives = 5
         self.enemies = []
         
         self.movingRight = False
@@ -64,7 +65,7 @@ class Player(gameObject):
         self.clock = pygame.time.Clock()
         
         self.rect = self.animations["idle"][0].get_rect()
-        self.rect.x = 5
+        self.rect.x = 50
         self.rect.y = 200
         
     
@@ -77,7 +78,7 @@ class Player(gameObject):
             
             if(self.attackOneCoolDown == 0):
                 self.currentAction = "attack"
-                self.attackOneCoolDown = 200
+                self.attackOneCoolDown = 150
                        
             return
                 
@@ -97,7 +98,7 @@ class Player(gameObject):
                                 enemy.damage(1)
                             
                 # self.movingIndex += 1
-                self.attackOneCoolDown = 400            
+                self.attackOneCoolDown = 150          
                 return
 
             self.currentAction = "idle"
@@ -161,10 +162,14 @@ class Player(gameObject):
             self.movingRight = False
             self.index = 0
     
-        self.move()
-    
     
     def hurt(self):
+        
+        self.lives -= 1
+        if(self.lives == 0):
+            self.kill()
+            return
+        
         
         self.index = 0
         self.currentAction = "hurt"
@@ -209,7 +214,10 @@ class Player(gameObject):
             self.attackOneCoolDown -= 1
 
     
-    def move(self):
+    def move(self, bgScroll):
+        
+        screenScroll = 0
+        
         accX = 0
         accY = 0
         
@@ -225,7 +233,7 @@ class Player(gameObject):
         
         if(self.rect.y < 600):
             if(not self.yVel > 5):
-                self.yVel += 0.75    
+                self.yVel += 0.5    
         
         elif(self.yVel != 0 and self.rect.y > 600):
             self.yVel = 0
@@ -240,6 +248,19 @@ class Player(gameObject):
         self.rect.y += accY
     
     
+        if((self.rect.right > start.WIDTH - start.SCROLLSTART and self.movingRight and bgScroll < 500) or (self.rect.left < start.SCROLLSTART and self.movingLeft and bgScroll > 0)):
+            self.rect.x -= accX
+            screenScroll = - accX
+            
+        elif(self.rect.right > start.WIDTH - start.SCROLLSTART and self.movingRight and bgScroll >= 500):
+            self.rect.x -= accX
+            
+        elif(self.rect.left < start.SCROLLSTART and self.movingLeft and bgScroll <= 0):
+            self.rect.x -= accX
+            
+        return screenScroll
+            
+    
     def draw(self, screen):
         try:
             screen.blit(pygame.transform.flip(self.animations[self.currentAction][self.index], self.facingLeft, False), self.rect)
@@ -249,11 +270,12 @@ class Player(gameObject):
             
             
 class Skels(gameObject):
-    def __init__(self):
+    def __init__(self, x, y):
         super().__init__(1.5, 1, "img/enemies/Skeleton Idle.png")
         
         self.alive = True
         self.health = 4
+        self.vision = pygame.Rect(0, 0, 150, 20)
         
         self.movingRight = False
         self.movingLeft = False 
@@ -281,6 +303,8 @@ class Skels(gameObject):
         
         movingSprites = Spritesheet("img/enemies/Skeleton Walk.png")
         
+        attackSprites = Spritesheet("img/enemies/Skeleton Attack.png")
+        
         # jumpSprites = Spritesheet("img/player/jump.png")
         self.animations["idle"] = [pygame.transform.scale(idleSpriteSheet.parse_sprite(f'skeleton_idle{i}.png'),  
                                                           (24 * self.scale, 32 * self.scale)) for i in range(1, 12)]
@@ -295,23 +319,49 @@ class Skels(gameObject):
         self.animations["moving"] = [pygame.transform.scale(movingSprites.parse_sprite(f'skeleton_walk{i}.png'),  
                                                           (24 * self.scale, 32 * self.scale)) for i in range(1, 14)]
         
+        # why this? because python works using references
+        self.animations["agro"] = [pygame.transform.scale(movingSprites.parse_sprite(f'skeleton_walk{i}.png'),  
+                                                          (24 * self.scale, 32 * self.scale)) for i in range(1, 14)]
+        
+         # why this? because python works using references
+        self.animations["attack"] = [pygame.transform.scale(attackSprites.parse_sprite(f'skeleton_attack{i}.png'),  
+                                                          (43 * self.scale, 37 * self.scale)) for i in range(1, 19)]
+        
         self.clock = pygame.time.Clock()
         
         self.rect = self.animations["idle"][0].get_rect()
-        self.rect.x = 400
-        self.rect.y = 615    
+        self.rect.x = x
+        self.rect.y = y    
     
-    def update(self): 
+    def update(self, scroll): 
         
-       
+        self.rect.x += scroll
+        
+        if(self.facingLeft):
+            self.vision.center = (self.rect.centerx + 65 * -1, self.rect.centery)
+        else:
+            self.vision.center = (self.rect.centerx + 65 * 1, self.rect.centery)
+        
+                     
         if(self.currentAction == "dying"):
             return
+        
+        if(self.currentAction == "attack"):
+            return
+       
+        if(self.currentAction == "agro"):
+            if(self.facingLeft):
+                self.movingLeft = True
+                self.movingRight = False
+                
+            else:
+                self.movingRight = True
+                self.movingLeft = False
            
 
         if(self.currentAction == "idle"):
             
-            
-            print(self.idleCounter, self.idleTimer)
+
             # Value changes every call but thats fine
             if self.idleCounter < self.idleTimer:
                 # print(self.idleCounter)
@@ -334,10 +384,11 @@ class Skels(gameObject):
                 self.movingRight = False
 
         
+        
         self.move()
     
     def tick(self, ticks):
-
+               
         if(self.currentAction == "idle" and ticks % 15 == 0):
             self.index = (self.index + 1) % len(self.animations[self.currentAction])
             
@@ -349,7 +400,6 @@ class Skels(gameObject):
             else:
                 self.index = 0
                 self.currentAction = "idle"
-                self.idleTimer = randint(200, 500)
             
             # self.index = (self.index + 1) % len(self.animations[self.currentAction])
         
@@ -366,7 +416,21 @@ class Skels(gameObject):
                 if(self.movingIndex >= 2):
                     self.currentAction = "idle"
                     self.movingIndex = 0
+                    
+        if(self.currentAction == "agro" and ticks % 8 == 0):
+            self.index = (self.index + 1) % len(self.animations[self.currentAction]) 
             
+        if(self.currentAction == "attack" and ticks % 12 == 0):                        
+            if(self.index < len(self.animations[self.currentAction]) - 1):
+                self.index = (self.index + 1)
+                
+                
+
+            else:
+                self.index = 0
+                self.currentAction = "idle"
+                self.idleCounter = 0
+                self.idleTimer = randint(200, 500) 
         
         
         if(self.currentAction == "dying" and ticks % 6 == 0):
@@ -425,8 +489,19 @@ class Skels(gameObject):
     
     def draw(self, screen):
         try:
+            
+            if self.currentAction == "attack":
+                if(self.facingLeft):
+                    screen.blit(pygame.transform.flip(self.animations[self.currentAction][self.index], self.facingLeft, False), self.rect.move(-30, -6))
+                    self.rect.move(18, 6)
+                    
+                else:
+                    screen.blit(pygame.transform.flip(self.animations[self.currentAction][self.index], self.facingLeft, False), self.rect.move(4, -6))
+                    self.rect.move(-2, 6)
+                return
             screen.blit(pygame.transform.flip(self.animations[self.currentAction][self.index], self.facingLeft, False), self.rect)
-        
+            # pygame.draw.rect(screen, (0xBF,0x0F,0xB5), self.vision)
+            
         except IndexError:
             print(self.currentAction, self.index)
             
@@ -437,20 +512,39 @@ class skeletonGroup(pygame.sprite.Group):
         
         self.player = player
         
-    def update(self, ticks):
+    def update(self, ticks, scroll):
         for sprite in self.sprites():
             
             sprite.tick(ticks)
-            sprite.update()
+            sprite.update(scroll)
             
-            # if(self.player.rect.x > sprite.rect.x and sprite.currentAction != "dying"):
-                    
-            #     sprite.facingLeft = False
+            # print(sprite.currentAction, sprite.vision.colliderect(self.player.rect))
+            
+            if(self.player.currentAction == "hurt"):
+                return
+            
+            if(sprite.vision.colliderect(self.player.rect) and sprite.currentAction != "agro" and sprite.currentAction != "attack"):
+                sprite.index = 0
+                sprite.currentAction = "agro"
                 
+            if(not sprite.vision.colliderect(self.player.rect) and sprite.currentAction == "agro"):
+                sprite.index = 0
+                sprite.idleCounter = 0
+                sprite.idleTimer = randint(200, 500)
+                sprite.currentAction = "idle"
                 
-                
-            # elif (self.player.rect.x < sprite.rect.x and sprite.currentAction != "dying"):
-            #     sprite.facingLeft = True
+            elif(sprite.currentAction == "agro"):
+                if(pygame.sprite.collide_rect(self.player, sprite)):
+                    sprite.index = 0
+                    sprite.currentAction = "attack"
+                    sprite.movingLeft = False
+                    sprite.movingRight = False
+                pass
+            
+            elif(sprite.currentAction == "attack" and sprite.index >= 6 and pygame.sprite.collide_rect(self.player, sprite)):
+                self.player.hurt()
+            
+            
                 
                 
     def draw(self, screen):

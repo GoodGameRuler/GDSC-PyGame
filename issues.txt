@@ -1,2 +1,3 @@
 PROBLEMS 
 - Hold move button through respawn => then moving but with idle animation
+- You can agro above the enemy

@@ -1,4 +1,3 @@
-from turtle import back
 import pygame
 from pygame.locals import *
 from spritesheet import Spritesheet
@@ -6,7 +5,6 @@ from gameObjects import *
 
 WIDTH = 1280
 HEIGHT = 720
-LENGTH = 3
 
 SCROLLSTART = 50
 
@@ -32,7 +30,7 @@ def loadImage(image):
 def drawBackground(screen, imgLoaded):
     
     screen.fill((0, 0, 255))
-    for x in range(LENGTH):
+    for x in range(3):
         for image in range(0, len(imgLoaded)):
             screen.blit(imgLoaded[image][0], ((x * WIDTH) -backgroundScroll * (image / 10.0), 0))
 
@@ -58,14 +56,10 @@ def main():
 
 
     player = Player()
-    skeleton = Skels(400, 615)
-    skeleton2 = Skels(1000, 615)
-    skeleton3 = Skels(1400, 615)
+    skeleton = Skels()
     skeletons = skeletonGroup(player)
     player.enemies.append(skeletons)
     skeletons.add(skeleton)
-    skeletons.add(skeleton2)
-    skeletons.add(skeleton3)
    
    
     running = True
@@ -96,7 +90,7 @@ def main():
             
            
             player.update(keys[pygame.K_LEFT], keys[pygame.K_RIGHT], keys[pygame.K_UP], keys[pygame.K_DOWN], keys[pygame.K_s])
-            scroll = player.move(backgroundScroll)
+            scroll = player.move()
             backgroundScroll -= scroll
             player.draw(screen)
         
@@ -104,7 +98,7 @@ def main():
         # ############################### ENEMY ############################### #
         
         skeletons.collidePlayer(player)
-        skeletons.update(pygame.time.get_ticks(), scroll)
+        skeletons.update(pygame.time.get_ticks())
         skeletons.draw(screen)
             
         pygame.display.update()
