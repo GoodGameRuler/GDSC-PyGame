@@ -1,8 +1,10 @@
+import imp
 from turtle import back
 import pygame
 from pygame.locals import *
 from spritesheet import Spritesheet
 from gameObjects import *
+from button import Button
 
 WIDTH = 1280
 HEIGHT = 720
@@ -47,6 +49,11 @@ def main():
     global backgroundScroll
     global scrollSpeed    
     
+    gameStarted = False
+    gameEnded = False
+    gamePaused = False
+    gameLost = False
+    
     # Initialise screen
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -69,12 +76,34 @@ def main():
    
    
     running = True
+    
+    menuPlay = pygame.transform.scale(pygame.image.load(f"img/GUI/menu/play.png"), (40, 40)).convert_alpha()
+    startButton = Button(615, 400, menuPlay, 1) 
 
+    menuPause = pygame.transform.scale(pygame.image.load(f"img/GUI/match3/pause.png"), (40, 40)).convert_alpha()
+    pauseButton = Button(1220, 20, menuPause, 1) 
+    unPauseButton = Button(1220, 20, menuPlay, 1)
+    
+    menuClose = pygame.transform.scale(pygame.image.load(f"img/GUI/level_select/close_2.png"), (40, 40)).convert_alpha() 
+    closeButton = Button(770, 530, menuClose, 1)
+    
+    gameWonScreen = pygame.transform.scale(pygame.image.load(f"img/GUI/you_win/bg.png"), (400, 400)).convert_alpha()
+    gameWonHeader = pygame.transform.scale(pygame.image.load(f"img/GUI/you_win/header.png"), (150, 75)).convert_alpha()
+    gameLoseHeader = pygame.transform.scale(pygame.image.load(f"img/GUI/you_lose/header.png"), (150, 75)).convert_alpha()
+    
+    menuResize = pygame.transform.scale(pygame.image.load(f"img/GUI/bubble/btn_1.png"), (40, 40)).convert_alpha()
+    resizeButton =  Button(1160, 20, menuResize, 1) 
+    
+    heart = pygame.transform.scale(pygame.image.load(f"img/player/Heart.png"), (40, 40)).convert_alpha()
+    
+    # gameWon = 
+    
     # Event loop
     while running:
 
         clock.tick(FPS)
 
+        
         for event in pygame.event.get():
             if event.type == QUIT:
                 return
@@ -83,10 +112,63 @@ def main():
             
                 if event.key == pygame.K_ESCAPE:
                     pygame.display.toggle_fullscreen()
+                    
+                if event.key == pygame.K_w:
+                    gameLost = False
+                    gameEnded = True
+                    
+                elif event.key == pygame.K_l:
+                    gameLost = True
+                    gameEnded = True
+                    
 
 
+        if not gameStarted:
+            img = pygame.transform.scale(pygame.image.load(f"img/background.png"), (WIDTH, HEIGHT)).convert_alpha()
+            menuLogo = pygame.transform.scale(pygame.image.load(f"img/GUI/menu/logo.png"), (200, 80)).convert_alpha()
+            screen.blit(img, (0, 0))
+            screen.blit(menuLogo, (535, 80))
+            if(startButton.draw(screen)):
+                gameStarted = True
+            pygame.display.update()
+            
+            continue
+        
+        if gameEnded:
+            menuLogo = pygame.transform.scale(pygame.image.load(f"img/GUI/menu/logo.png"), (200, 80)).convert_alpha()
+            screen.blit(menuLogo, (535, 80))
+            screen.blit(gameWonScreen, (440, 200))
+            
+            if(not gameLost):
+                screen.blit(gameWonHeader, (560, 230))
+                    
+            else:
+                screen.blit(gameLoseHeader, (560, 230))
+                
+            if closeButton.draw(screen):
+                running = False
+                
+            pygame.display.update()
+            continue
+        
+        if gamePaused:
+            if(unPauseButton.draw(screen)):
+                gamePaused = False
+                
+            pygame.display.update()
+            continue   
+        
         drawBackground(screen, imgLoaded)
         
+        if(resizeButton.draw(screen)):
+            pygame.display.toggle_fullscreen()
+        
+        if(pauseButton.draw(screen)):
+            gamePaused = True
+            
+        for i in range(0, player.lives):
+            screen.blit(heart, (20 + i * 40, 20))
+            
         
         # ############################### PLAYER ############################### #
         player.tick(pygame.time.get_ticks())
@@ -106,7 +188,16 @@ def main():
         skeletons.collidePlayer(player)
         skeletons.update(pygame.time.get_ticks(), scroll)
         skeletons.draw(screen)
-            
+        
+        if len(skeletons) == 0:
+            gameEnded = True
+            gameLost = False
+        
+        
+        if(player.alive == False):
+            gameEnded = True
+            gameLost = True
+        
         pygame.display.update()
 
 

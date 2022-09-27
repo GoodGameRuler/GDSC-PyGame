@@ -167,6 +167,7 @@ class Player(gameObject):
         
         self.lives -= 1
         if(self.lives == 0):
+            self.alive = False
             self.kill()
             return
         
