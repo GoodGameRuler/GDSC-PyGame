@@ -1,0 +1,91 @@
+{"frames": {
+
+    "skeleton_idle1.png":
+    {
+        "frame": {"x":0,"y":0,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle2.png":
+    {
+        "frame": {"x":24,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle3.png":
+    {
+        "frame": {"x":48,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle4.png":
+    {
+        "frame": {"x":72,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle5.png":
+    {
+        "frame": {"x":97,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle6.png":
+    {
+        "frame": {"x":121,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle7.png":
+    {
+        "frame": {"x":145,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle8.png":
+    {
+        "frame": {"x":168,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle9.png":
+    {
+        "frame": {"x":191,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle10.png":
+    {
+        "frame": {"x":216,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "skeleton_idle11.png":
+    {
+        "frame": {"x":240,"y":1,"w":24,"h":32},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    }}
+}

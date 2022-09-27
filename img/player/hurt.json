@@ -1,0 +1,59 @@
+{"frames": {
+
+    "f_redHood1.png":
+    {
+        "frame": {"x":1,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood2.png":
+    {
+        "frame": {"x":81,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood3.png":
+    {
+        "frame": {"x":161,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood4.png":
+    {
+        "frame": {"x":241,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood5.png":
+    {
+        "frame": {"x":321,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood6.png":
+    {
+        "frame": {"x":401,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood7.png":
+    {
+        "frame": {"x":481,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    }}
+}

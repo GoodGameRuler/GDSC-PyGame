@@ -1,0 +1,140 @@
+{"frames": {
+
+    "f_redHood1.png":
+    {
+        "frame": {"x":1,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood2.png":
+    {
+        "frame": {"x":81,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood3.png":
+    {
+        "frame": {"x":161,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood4.png":
+    {
+        "frame": {"x":241,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood5.png":
+    {
+        "frame": {"x":321,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood6.png":
+    {
+        "frame": {"x":401,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood7.png":
+    {
+        "frame": {"x":481,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood8.png":
+    {
+        "frame": {"x":561,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood9.png":
+    {
+        "frame": {"x":641,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood10.png":
+    {
+        "frame": {"x":721,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood11.png":
+    {
+        "frame": {"x":801,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood12.png":
+    {
+        "frame": {"x":881,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood13.png":
+    {
+        "frame": {"x":961,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood14.png":
+    {
+        "frame": {"x":1041,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood15.png":
+    {
+        "frame": {"x":1121,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood16.png":
+    {
+        "frame": {"x":1201,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    },
+    "f_redHood17.png":
+    {
+        "frame": {"x":1281,"y":1,"w":60,"h":80},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+        "sourceSize": {"w":128,"h":128}
+    }}
+
+}
