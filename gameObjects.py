@@ -675,7 +675,7 @@ class Skels(GameObject):
             self.currentAction = "dying"
 
     
-    # 
+    # The move function for skellies
     def move(self):
         accX = 0
         accY = 0
@@ -708,9 +708,13 @@ class Skels(GameObject):
         self.rect.y += accY
     
     
+    # The draw dunction for the skellies
     def draw(self, screen):
         try:
             
+            # A bit convoluted because the attack sprites are larger than the regualr sprites and we have to offset them if the current action is attack
+            # Not the best way of doing things
+            # Defintely better just to go through the images and change the JSON for the sprite sheet to reduce the padding. 
             if self.currentAction == "attack":
                 if(self.facingLeft):
                     screen.blit(pygame.transform.flip(self.animations[self.currentAction][self.index], self.facingLeft, False), self.rect.move(-30, -6))
@@ -721,39 +725,56 @@ class Skels(GameObject):
                     self.rect.move(-2, 6)
                 return
             screen.blit(pygame.transform.flip(self.animations[self.currentAction][self.index], self.facingLeft, False), self.rect)
+            
+            # IMPORTANT
+            # Uncomment the line below to see the skellies vision in action
+            
+            
             # pygame.draw.rect(screen, (0xBF,0x0F,0xB5), self.vision)
             
         except IndexError:
             print(self.currentAction, self.index)
             
 
+# The skelly's group
+# Also recall that .sprites() is an inbuilt function of the pygame.sprite.Group class
+# Whenever we add something to a group (using skeletons.add(skeleton) for example) it shows up when we call .sprites()
 class skeletonGroup(pygame.sprite.Group):
+    
+    # Called when we fo SkeletonGroup = skeletonGroup()
     def __init__(self, player):
         super().__init__()
         
         self.player = player
         
+    # We call this in main it manages all the skelies
     def update(self, ticks, scroll):
+        
+        # For every skelly that has been added to this group
         for sprite in self.sprites():
             
-            sprite.tick(ticks)
-            sprite.update(scroll)
+            # The usual ticks function and update function
+            sprite.tick(ticks) # Just a quick reminder that I have used tick to signfy anything related to animations
+            sprite.update(scroll) # and update as anything related to the position or object action. Also recall that update calls move
             
-            # print(sprite.currentAction, sprite.vision.colliderect(self.player.rect))
-            
+            # If the player is hurr we don't need to do anything specific, we go about life giving time for the player to respawn.
+            # We might hunt the player but we aren't monsters
             if(self.player.currentAction == "hurt"):
                 return
             
+            # If we skellies see the player and we aren't attacking the player, or agro-ed to the player agro onto the player
             if(sprite.vision.colliderect(self.player.rect) and sprite.currentAction != "agro" and sprite.currentAction != "attack"):
                 sprite.index = 0
                 sprite.currentAction = "agro"
                 
+            # If we are agro but the player has dissapeared from our vision into darkness :(, we un-agro
             if(not sprite.vision.colliderect(self.player.rect) and sprite.currentAction == "agro"):
                 sprite.index = 0
                 sprite.idleCounter = 0
                 sprite.idleTimer = randint(200, 500)
                 sprite.currentAction = "idle"
                 
+            # If we are agro, and we are very close to the player we cant help but to stop moving and start to attack the player.
             elif(sprite.currentAction == "agro"):
                 if(pygame.sprite.collide_rect(self.player, sprite)):
                     sprite.index = 0
@@ -762,27 +783,29 @@ class skeletonGroup(pygame.sprite.Group):
                     sprite.movingRight = False
                 pass
             
+            # If we are about halway through attacking and the player is still close to use, they die and are myseteriously teleported away.
             elif(sprite.currentAction == "attack" and sprite.index >= 6 and pygame.sprite.collide_rect(self.player, sprite)):
                 self.player.hurt()
             
             
                 
-                
+    # This helps draw and spawn use skellies onto the screen
     def draw(self, screen):
         
         for sprite in self.sprites():
             
             sprite.draw(screen)
             
-            
+
+    # I (the programmer) have defined a sepeare collision detection function instead of using the inbuilt one.
+    # I have done this because all the sprites have alot of padding (of transparent pixels) and so the collision detection function, pygame.sprite.spritecollide(), detects that
+    # the player has collided with a skeleton before it has actually done so visibly on screen. 
     def collidePlayer(self, player):
         for sprite in self.sprites():
-            # if (player.rect.center)
             
+            # If the centers of the player and skelly is a certain (lowkey hardcoded) value away from each other and the player and skelly are kind of on the same y level
+            # The player gets hurt
             if (abs(player.rect.center[0] - sprite.rect.center[0]) <= 20 and abs(player.rect.center[1] - sprite.rect.center[1]) <= 25 and player.currentAction != "hurt" and sprite.currentAction != "dying"):
                 player.hurt()
-            
-            # if pygame.sprite.collide_mask(player, sprite):
-            #     player.hurt()
             
             

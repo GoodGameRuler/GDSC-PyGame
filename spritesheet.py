@@ -1,4 +1,8 @@
-import pygame
+#### DISCLAIMER ###
+# I have literally copied this class from a blog online (once I refind it I will credit it)
+# The rest of the code (other files) is my own
+
+import pygame 
 import json
 
 class Spritesheet:
