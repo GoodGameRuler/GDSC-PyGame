@@ -668,11 +668,14 @@ class Skels(GameObject):
         
         self.index = 0
         self.currentAction = "damage"
+        
+        # If our health drops below 0 then we start dying
         if(self.health <= 0):
             
             self.currentAction = "dying"
 
     
+    # 
     def move(self):
         accX = 0
         accY = 0
