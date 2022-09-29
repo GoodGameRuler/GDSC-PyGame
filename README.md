@@ -1,3 +1,5 @@
 # GDSC-PyGame
 
 Welcome to the PyGame Demo README. This README will be short and sweet, especially because there are so many comments in the actual code. As a rough guide I reccommend you read through `gameObjects.py` first, then `start.py` and then the rest. Though you might want to look at `spritesheet.py` as you are looking through `gameObjects.py`. Regardless I have most my stuff in `gameObjects.py`. Also I've made a `backround.py` file for you to mess around with the dynamic background and try to implement one yourselves. Though, I reccomend that being less of a priority: get the main functionality of your game working first. Good Luck to everyone, and happy coding (if that's even a thing). 
+
+To get started download the Zip to my code by clicking on the neon green code button, and then download zip. Alternatively, if you want a git repo right away you can fork this repo, and pull it. If you find any issues with my game I would be grateful if you could add it to the issues.txt and make a pull request (allg if you have no idea what that is).
